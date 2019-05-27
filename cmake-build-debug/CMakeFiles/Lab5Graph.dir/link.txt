@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\Lab5Graph.dir/objects.a
+C:\compil\bin\ar.exe cr CMakeFiles\Lab5Graph.dir/objects.a @CMakeFiles\Lab5Graph.dir\objects1.rsp
+C:\compil\bin\gcc.exe -g   -Wl,--whole-archive CMakeFiles\Lab5Graph.dir/objects.a -Wl,--no-whole-archive  -o Lab5Graph.exe -Wl,--out-implib,libLab5Graph.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Lab5Graph.dir\linklibs.rsp
