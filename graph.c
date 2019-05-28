@@ -44,6 +44,7 @@ struct Graph * addGraphInMas(struct Graph rib, struct Graph *list) {
         struct Graph *newlist = (struct Graph*) malloc((lenList+1) * sizeof(struct Graph));
         memcpy(newlist,list,(lenList)* sizeof(struct Graph));
         newlist[lenList] = rib;
+        return newlist;
       //  printList(newlist);
     }
     return list;
