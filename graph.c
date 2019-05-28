@@ -20,7 +20,6 @@ struct Graph newRib(void) {
     result.num = 0;
     result.list = NULL;
     result.lenList = 0;
-    //result.list = (struct Graph *) malloc(sizeof(*result.list));
     return result;
 }
 
@@ -29,7 +28,6 @@ struct Graph newRibNum(int num) {
     result.num = num;
     result.list = NULL;
     result.lenList = 0;
-    // result.list = (struct Graph *) malloc(sizeof(*result.list));
     return result;
 }
 
@@ -39,18 +37,16 @@ struct Graph * addGraphInMas(struct Graph rib, struct Graph *list) {
         addGraphInMas(rib,list);
     }
     int lenList = _msize(list) / sizeof(list[0]);
-    if (indexInMas(rib.num, list, lenList) == 0) {
-        //printList(list);
-        struct Graph *newlist = (struct Graph*) malloc((lenList+1) * sizeof(struct Graph));
-        memcpy(newlist,list,(lenList)* sizeof(struct Graph));
-        newlist[lenList] = rib;
-        return newlist;
-      //  printList(newlist);
+    if (indexInMas(rib.num, list) == 0) {
+        struct Graph *newList = (struct Graph*) malloc((lenList+1) * sizeof(struct Graph));
+        memcpy(newList,list,(lenList)* sizeof(struct Graph));
+        newList[lenList] = rib;
+        return newList;
     }
     return list;
 }
 
-char indexInMas(int n, struct Graph *list, int len) {
+char indexInMas(int n, struct Graph *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     for (int i = 0; i < lenList; i++) {
         if (list[i].num == n) return 1;

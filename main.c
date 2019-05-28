@@ -8,7 +8,7 @@ int main() {
     a=addGraphInMas(b,a);
     b.num=2;
     a=addGraphInMas(b,a);
-    char i =indexInMas(0,a,3);
+    char i = indexInMas(0, a);
     printf("Hello, World!\n");
     return 0;
 }

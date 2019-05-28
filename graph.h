@@ -24,7 +24,7 @@ struct Graph newRibNum(int num);
 
 struct Graph * addGraphInMas(struct Graph rib, struct Graph *list);
 
-char indexInMas(int n,struct Graph *list,int len);
+char indexInMas(int n, struct Graph *list);
 
 void delList(struct Graph *list);
 
