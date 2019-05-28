@@ -31,7 +31,7 @@ struct Graph newRibNum(int num) {
     return result;
 }
 
-struct Graph * addGraphInMas(struct Graph rib, struct Graph *list) {
+struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
     if (list == NULL) {
         list = newListGraphs();
         addGraphInMas(rib,list);
@@ -66,4 +66,10 @@ void printList(struct Graph *list) {
     }
 }
 
+
+struct Graph *loadFile(char *fileName){
+    FILE *graphFile = fopen(fileName, "r");
+
+
+}
 

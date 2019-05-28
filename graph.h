@@ -29,4 +29,6 @@ char indexInMas(int n, struct Graph *list);
 void delList(struct Graph *list);
 
 void printList(struct Graph *list);
+
+
 #endif //LAB5GRAPH_GRAPH_H
