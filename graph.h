@@ -22,7 +22,7 @@ struct Graph newRib(void);
 
 struct Graph newRibNum(int num);
 
-void addGraphInMas(struct Graph rib, struct Graph *list);
+struct Graph * addGraphInMas(struct Graph rib, struct Graph *list);
 
 char indexInMas(int n,struct Graph *list,int len);
 

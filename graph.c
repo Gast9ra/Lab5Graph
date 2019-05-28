@@ -2,12 +2,14 @@
 // Created by Gast9ra on 21.05.2019.
 //
 #include <stdlib.h>
-#include "graph.h"
 #include <stdio.h>
+#include <string.h>
+#include <malloc.h>
+#include "graph.h"
 
 
 struct Graph *newListGraphs(void) {
-    struct Graph *_graph = malloc(sizeof(_graph));
+    struct Graph *_graph = (struct Graph*) malloc(sizeof(struct Graph));
     if (_graph == NULL) return 0;              //if out memory
     _graph[0] = newRib();
     return _graph;
@@ -31,22 +33,20 @@ struct Graph newRibNum(int num) {
     return result;
 }
 
-void addGraphInMas(struct Graph rib, struct Graph *list) {
+struct Graph * addGraphInMas(struct Graph rib, struct Graph *list) {
     if (list == NULL) {
-        list = (struct Graph *) malloc(sizeof(struct Graph) + sizeof(rib));
-        return;
+        list = newListGraphs();
+        addGraphInMas(rib,list);
     }
     int lenList = _msize(list) / sizeof(list[0]);
     if (indexInMas(rib.num, list, lenList) == 0) {
-        lenList++;
-        printList(list);
-        struct Graph *newlist = realloc(list, lenList * sizeof(struct Graph));
-
-        printf("_\n");
-        printList(newlist);
-        list[lenList - 1] = rib;
-        list = newlist;
+        //printList(list);
+        struct Graph *newlist = (struct Graph*) malloc((lenList+1) * sizeof(struct Graph));
+        memcpy(newlist,list,(lenList)* sizeof(struct Graph));
+        newlist[lenList] = rib;
+      //  printList(newlist);
     }
+    return list;
 }
 
 char indexInMas(int n, struct Graph *list, int len) {
