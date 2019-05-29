@@ -9,6 +9,7 @@ int main() {
     b.num=2;
     a=addGraphInMas(b,a);
     char i = indexInMas(0, a);
+
     printf("Hello, World!\n");
     return 0;
 }

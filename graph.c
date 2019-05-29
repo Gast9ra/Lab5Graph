@@ -8,6 +8,8 @@
 #include "graph.h"
 
 
+
+
 struct Graph *newListGraphs(void) {
     struct Graph *_graph = (struct Graph*) malloc(sizeof(struct Graph));
     if (_graph == NULL) return 0;              //if out memory
@@ -39,6 +41,9 @@ struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     if (indexInMas(rib.num, list) == 0) {
         struct Graph *newList = (struct Graph*) malloc((lenList+1) * sizeof(struct Graph));
+        if (newList==NULL)
+            return list;
+
         memcpy(newList,list,(lenList)* sizeof(struct Graph));
         newList[lenList] = rib;
         return newList;
@@ -68,8 +73,13 @@ void printList(struct Graph *list) {
 
 
 struct Graph *loadFile(char *fileName){
-    FILE *graphFile = fopen(fileName, "r");
+    FILE *openFile = fopen(fileName, "r");
+    if (openFile == NULL) return NULL;
+    struct Graph *list=newListGraphs();
 
 
+
+    fclose(openFile);
+    return list;
 }
 
