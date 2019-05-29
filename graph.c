@@ -7,7 +7,7 @@
 #include <malloc.h>
 #include "graph.h"
 
-
+int *split(char c,char *mas, int lenMas);
 
 
 struct Graph *newListGraphs(void) {
@@ -86,12 +86,28 @@ struct Graph *loadFile(char *fileName){
         lenChar++;
         file=realloc(file, sizeof(char)*(lenChar));
         file[lenChar-1]=c;
+        //if( c >= '0' && c <= '9' ) printf("%c ",c);
     }
     fclose(openFile);
 
-
+    int *splitResult=split('-',file,lenChar);
+    int lenSplitResult=_msize(splitResult)/ sizeof(int);
+    
 
 
     return list;
+}
+
+int *split(char c,char *mas, int lenMas){
+    int *result;
+    int lenResult=0;
+    for (int i=0;i<lenMas;i++){
+        if(c==mas[i]) {
+            lenResult++;
+            result=realloc(result, sizeof(int)*(lenResult));
+            result[lenResult-1]=i;
+        }
+    }
+    return result;
 }
 

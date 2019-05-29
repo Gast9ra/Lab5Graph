@@ -11,6 +11,6 @@ int main() {
     char i = indexInMas(0, a);
     loadFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\fileDATA.txt");
 
-    printf("Hello, World!\n");
+    printf("END!\n");
     return 0;
 }
