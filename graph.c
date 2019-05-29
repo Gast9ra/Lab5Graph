@@ -41,7 +41,8 @@ struct Graph newRibNum(int num) {
 struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
     if (list == NULL) {
         list = newListGraphs();
-        addGraphInMas(rib, list);
+        list=addGraphInMas(rib, list);
+        return list;
     }
     int lenList = _msize(list) / sizeof(list[0]);
     if (indexInMas(rib.num, list) == 0) {
@@ -207,9 +208,10 @@ int *subSplit(char c, char *mas, int start, int end) {
 }
 
 struct Graph *masIntToRibList(int* data){
-    struct Graph *result;
+    struct Graph *result=newListGraphs();
     int len =_msize(data)/ sizeof(int);
-    for (int i=0;i<len;i++){
+    result[0].num=data[0];
+    for (int i=1;i<len;i++){
         result=addGraphInMas(newRibNum(data[i]),result);
     }
     return result;
