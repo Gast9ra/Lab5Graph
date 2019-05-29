@@ -85,7 +85,7 @@ struct Graph *loadFile(char *fileName) {
         printf("File not open \n");
         return NULL;
     }
-    struct Graph *list = newListGraphs();
+    struct Graph *result = newListGraphs();
     int lenChar = 0;
     char *file;
     char c;
@@ -135,15 +135,19 @@ struct Graph *loadFile(char *fileName) {
                 free(num);
             }
             rib.list=masIntToRibList(ribs);
+            rib.lenList=_msize(rib.list)/ sizeof(struct Graph);
+            result=addGraphInMas(rib,result);
             free(subSpl);
             free(ribs);
-
         }
         printf("test\n");
     }
 
+    free(splitResultSlash);
+    free(splitResultStr);
 
-    return list;
+
+    return result;
 }
 
 int *splitInOneStr(char c, char *mas, int lenMas) {
