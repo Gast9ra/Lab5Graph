@@ -13,6 +13,7 @@ int *subSplit(char c, char *mas, int start, int end);
 
 int *splitInOneStr(char c, char *mas, int lenMas);
 
+struct Graph *masIntToRibList(int* data);
 
 struct Graph *newListGraphs(void) {
     struct Graph *_graph = (struct Graph *) malloc(sizeof(struct Graph));
@@ -68,6 +69,7 @@ void delList(struct Graph *list) {
     free(list);
 }
 
+
 void printList(struct Graph *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     for (int i = 0; i < lenList; i++) {
@@ -98,21 +100,22 @@ struct Graph *loadFile(char *fileName) {
     int *splitResultSlash = splitInOneStr('-', file, lenChar); //#
     int lenSplitResultSlash = _msize(splitResultSlash) / sizeof(int);
     int *splitResultStr = split('\n', file, lenChar); //#
-    // int lenSplitResultStr=_msize(splitResultStr) / sizeof(int);
+
 
     for (int i = 0; i < lenSplitResultSlash; i++) {
         c = file[splitResultSlash[i] - 1];
         if (c >= '0' && c <= '9') {
             struct Graph rib;
-            rib.num = (int) c;
+            rib=newRibNum(c-'0');
             int *subSpl = subSplit(' ', file, splitResultSlash[i], splitResultStr[i]); //#All space in str
             int lenSpl = _msize(subSpl) / sizeof(int);
-            int* ribs=malloc(sizeof(int)); //#rib in mas and repair to link
+            int* ribs=calloc(1,sizeof(int)); //#rib in mas and repair to link
+            ribs[0]=file[splitResultSlash[i]+1]-'0'; //num in right to slash
             int lenribs=1;
 
             for (int j = 0; j < lenSpl; j++) {
                 int last;
-                if (subSpl[j] == lenSpl - 1) last = splitResultStr[i];
+                if (j == lenSpl - 1) last = splitResultStr[i];
                 else last = subSpl[j + 1];
                 char *num=malloc(sizeof(char)); //#
                 int lenNum=0;
@@ -131,7 +134,9 @@ struct Graph *loadFile(char *fileName) {
                 ribs[lenribs-1]=prRib;
                 free(num);
             }
-            
+            rib.list=masIntToRibList(ribs);
+            free(subSpl);
+            free(ribs);
 
         }
         printf("test\n");
@@ -197,3 +202,11 @@ int *subSplit(char c, char *mas, int start, int end) {
 
 }
 
+struct Graph *masIntToRibList(int* data){
+    struct Graph *result;
+    int len =_msize(data)/ sizeof(int);
+    for (int i=0;i<len;i++){
+        result=addGraphInMas(newRibNum(data[i]),result);
+    }
+    return result;
+}
