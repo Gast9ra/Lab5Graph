@@ -74,12 +74,24 @@ void printList(struct Graph *list) {
 
 struct Graph *loadFile(char *fileName){
     FILE *openFile = fopen(fileName, "r");
-    if (openFile == NULL) return NULL;
+    if (openFile == NULL) {
+        printf("File not open \n");
+        return NULL;
+    }
     struct Graph *list=newListGraphs();
-
-
-
+    int lenChar=0;
+    char *file;
+    char c;
+    while ((c = fgetc(openFile)) != EOF){
+        lenChar++;
+        file=realloc(file, sizeof(char)*(lenChar));
+        file[lenChar-1]=c;
+    }
     fclose(openFile);
+
+
+
+
     return list;
 }
 

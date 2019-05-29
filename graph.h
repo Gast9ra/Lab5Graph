@@ -30,5 +30,6 @@ void delList(struct Graph *list);
 
 void printList(struct Graph *list);
 
+struct Graph *loadFile(char *fileName);
 
 #endif //LAB5GRAPH_GRAPH_H
