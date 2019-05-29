@@ -95,21 +95,43 @@ struct Graph *loadFile(char *fileName) {
     }
     fclose(openFile);
 
-    int *splitResultSlash = splitInOneStr('-', file, lenChar);
+    int *splitResultSlash = splitInOneStr('-', file, lenChar); //#
     int lenSplitResultSlash = _msize(splitResultSlash) / sizeof(int);
-    int *splitResultStr = split('\n', file, lenChar);
-    //int lenSplitResultStr=_msize(splitResultStr) / sizeof(int);
+    int *splitResultStr = split('\n', file, lenChar); //#
+    // int lenSplitResultStr=_msize(splitResultStr) / sizeof(int);
 
     for (int i = 0; i < lenSplitResultSlash; i++) {
         c = file[splitResultSlash[i] - 1];
         if (c >= '0' && c <= '9') {
             struct Graph rib;
             rib.num = (int) c;
-            int* subSpl= subSplit(' ',file,splitResultSlash[i],splitResultStr[i]);
-            int lenSpl=_msize(subSpl) / sizeof(int);
-            for(int j=0;j<lenSpl;j++){
-                
+            int *subSpl = subSplit(' ', file, splitResultSlash[i], splitResultStr[i]); //#All space in str
+            int lenSpl = _msize(subSpl) / sizeof(int);
+            int* ribs=malloc(sizeof(int)); //#rib in mas and repair to link
+            int lenribs=1;
+
+            for (int j = 0; j < lenSpl; j++) {
+                int last;
+                if (subSpl[j] == lenSpl - 1) last = splitResultStr[i];
+                else last = subSpl[j + 1];
+                char *num=malloc(sizeof(char)); //#
+                int lenNum=0;
+
+                for (int g = subSpl[j]+1; g < last; g++) {
+                    char letter=file[g];
+                    if( letter >= '0' && letter <= '9' ) {
+                        lenNum++;
+                        num = realloc(num, sizeof(char) * lenNum);
+                        num[lenNum - 1] = letter;
+                    }
+                }
+                int prRib=atoi(num); //rib for mas in int
+                lenribs++;
+                ribs=realloc(ribs,sizeof(int)*lenribs);
+                ribs[lenribs-1]=prRib;
+                free(num);
             }
+            
 
         }
         printf("test\n");
@@ -119,14 +141,14 @@ struct Graph *loadFile(char *fileName) {
     return list;
 }
 
-int *splitInOneStr(char c, char *mas, int lenMas){
+int *splitInOneStr(char c, char *mas, int lenMas) {
     int *result;
     int lenResult = 0;
-    char oneStr=1; //bool
+    char oneStr = 1; //bool
     for (int i = 0; i < lenMas; i++) {
-        if (c == mas[i]&& oneStr==1) {
+        if (c == mas[i] && oneStr == 1) {
             lenResult++;
-            oneStr=0;
+            oneStr = 0;
             if (lenResult == 1) {
                 result = malloc(sizeof(int) * lenResult);
             } else
@@ -135,7 +157,7 @@ int *splitInOneStr(char c, char *mas, int lenMas){
             result[lenResult - 1] = i;
         }
 
-        if ('\n'==mas[i]) oneStr=1;
+        if ('\n' == mas[i]) oneStr = 1;
     }
     return result;
 }
