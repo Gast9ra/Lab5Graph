@@ -1,3 +1,0 @@
-C:/Users/Gast9ra/CLionProjects/Lab5Graph/lab5/cmake-build-debug/CMakeFiles/Lab5Graph.dir
-C:/Users/Gast9ra/CLionProjects/Lab5Graph/lab5/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Gast9ra/CLionProjects/Lab5Graph/lab5/cmake-build-debug/CMakeFiles/rebuild_cache.dir

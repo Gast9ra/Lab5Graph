@@ -13,7 +13,6 @@ struct Graph {
 };
 
 
-
 //create new list for ribs
 struct Graph *newListGraphs(void);
 
@@ -22,11 +21,20 @@ struct Graph newRib(void);
 
 struct Graph newRibNum(int num);
 
-void addGraphInMas(struct Graph rib, struct Graph *list);
+struct Graph *addGraphInMas(struct Graph rib, struct Graph *list);
 
-char indexInMas(int n,struct Graph *list,int len);
+char indexInMas(int n, struct Graph *list);
 
 void delList(struct Graph *list);
 
+void printListDebug(struct Graph *list);
+
+struct Graph *loadFile(char *fileName);
+
+struct Graph *insertInList(struct Graph *list, struct Graph rib, int index);
+
+void writeInFile(char *fileName, struct Graph *list);
+
 void printList(struct Graph *list);
+
 #endif //LAB5GRAPH_GRAPH_H
