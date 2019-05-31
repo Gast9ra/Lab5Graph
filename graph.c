@@ -94,7 +94,6 @@ struct Graph *loadFile(char *fileName) {
         lenChar++;
         file = realloc(file, sizeof(char) * (lenChar));
         file[lenChar - 1] = c;
-        //if( c >= '0' && c <= '9' ) printf("%c ",c);
     }
     fclose(openFile);
 
@@ -114,6 +113,7 @@ struct Graph *loadFile(char *fileName) {
             int lenribs = 1;
             if (subSpl != NULL) {
                 int lenSpl = _msize(subSpl) / sizeof(int);
+
                 for (int j = 0; j < lenSpl; j++) {
                     int last;
                     if (j == lenSpl - 1) last = splitResultStr[i];
@@ -143,15 +143,31 @@ struct Graph *loadFile(char *fileName) {
             free(subSpl);
             free(ribs);
         }
-        printf("test\n");
+        printf("test debug\n");
     }
 
     free(splitResultSlash);
     free(splitResultStr);
 
+    //link ribs
+
+    int lenResult = _msize(result) / sizeof(struct Graph);
+    for (int i = 0; i < lenResult; i++) {
+        int num=result[i].num;
+
+        for(int j=0;j<lenResult;j++){
+
+            for(int g=0;g<result[j].lenList;g++){
+                if(result[j].list[g].num==num){
+                    result[j].list[g]=result[i];
+                }
+            }
+        }
+    }
 
     return result;
 }
+
 
 int *splitInOneStr(char c, char *mas, int lenMas) {
     int *result;
@@ -192,7 +208,7 @@ int *split(char c, char *mas, int lenMas) {
 }
 
 int *subSplit(char c, char *mas, int start, int end) {
-    int *result=NULL;
+    int *result = NULL;
     int lenResult = 0;
     for (int i = start; i < end; i++) {
         if (c == mas[i]) {
