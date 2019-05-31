@@ -160,7 +160,7 @@ struct Graph *loadFile(char *fileName) {
     }
     struct Graph *result = NULL;
     int lenChar = 0;
-    char *file;
+    char *file=malloc(sizeof(char));
     char c;
     while ((c = fgetc(openFile)) != EOF) {
         lenChar++;
