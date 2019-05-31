@@ -9,7 +9,8 @@ int main() {
     b.num=2;
     a=addGraphInMas(b,a);
     char i = indexInMas(0, a);
-    loadFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\fileDATA.txt");
+    struct Graph *test=loadFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\fileDATA.txt");
+    printList(test);
 
     printf("END!\n");
     return 0;

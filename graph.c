@@ -38,10 +38,22 @@ struct Graph newRibNum(int num) {
     return result;
 }
 
+struct Graph *insertInList(struct Graph *list, struct Graph rib, int index){
+    if(list==NULL){
+        list= newListGraphs();
+        list=insertInList(list,rib,index);
+        return list;
+    }
+
+    list[index]=rib;
+    return list;
+
+}
+
 struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
     if (list == NULL) {
         list = newListGraphs();
-        list = addGraphInMas(rib, list);
+        list = insertInList(list,rib,0);
         return list;
     }
     int lenList = _msize(list) / sizeof(list[0]);
@@ -74,10 +86,11 @@ void delList(struct Graph *list) {
 void printList(struct Graph *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     for (int i = 0; i < lenList; i++) {
-        printf("num %i \n mas%i\n len %i\n", list[0].num,
-               _msize(list[0].list), list[0].lenList);
+        printf("num %i \n mas%i\n len %i\n", list[i].num,
+               _msize(list[i].list), list[i].lenList);
     }
 }
+
 
 
 struct Graph *loadFile(char *fileName) {
@@ -86,7 +99,7 @@ struct Graph *loadFile(char *fileName) {
         printf("File not open \n");
         return NULL;
     }
-    struct Graph *result = newListGraphs();
+    struct Graph *result = NULL;
     int lenChar = 0;
     char *file;
     char c;
@@ -97,6 +110,7 @@ struct Graph *loadFile(char *fileName) {
     }
     fclose(openFile);
 
+    //parse string
     int *splitResultSlash = splitInOneStr('-', file, lenChar); //#
     int lenSplitResultSlash = _msize(splitResultSlash) / sizeof(int);
     int *splitResultStr = split('\n', file, lenChar); //#
@@ -143,23 +157,22 @@ struct Graph *loadFile(char *fileName) {
             free(subSpl);
             free(ribs);
         }
-        printf("test debug\n");
+        //printf("test debug\n");
     }
 
     free(splitResultSlash);
     free(splitResultStr);
 
     //link ribs
-
     int lenResult = _msize(result) / sizeof(struct Graph);
     for (int i = 0; i < lenResult; i++) {
-        int num=result[i].num;
+        int num = result[i].num;
 
-        for(int j=0;j<lenResult;j++){
+        for (int j = 0; j < lenResult; j++) {
 
-            for(int g=0;g<result[j].lenList;g++){
-                if(result[j].list[g].num==num){
-                    result[j].list[g]=result[i];
+            for (int g = 0; g < result[j].lenList; g++) {
+                if (result[j].list[g].num == num) {
+                    result[j].list[g] = result[i];
                 }
             }
         }

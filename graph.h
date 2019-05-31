@@ -32,4 +32,5 @@ void printList(struct Graph *list);
 
 struct Graph *loadFile(char *fileName);
 
+struct Graph *insertInList(struct Graph *list, struct Graph rib, int index);
 #endif //LAB5GRAPH_GRAPH_H
