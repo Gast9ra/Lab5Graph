@@ -38,22 +38,20 @@ struct Graph newRibNum(int num) {
     return result;
 }
 
-struct Graph *insertInList(struct Graph *list, struct Graph rib, int index){
-    if(list==NULL){
-        list= newListGraphs();
-        list=insertInList(list,rib,index);
+struct Graph *insertInList(struct Graph *list, struct Graph rib, int index) {
+    if (list == NULL) {
+        list = newListGraphs();
+        list = insertInList(list, rib, index);
         return list;
     }
-
-    list[index]=rib;
+    list[index] = rib;
     return list;
-
 }
 
 struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
     if (list == NULL) {
         list = newListGraphs();
-        list = insertInList(list,rib,0);
+        list = insertInList(list, rib, 0);
         return list;
     }
     int lenList = _msize(list) / sizeof(list[0]);
@@ -86,12 +84,49 @@ void delList(struct Graph *list) {
 void printList(struct Graph *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     for (int i = 0; i < lenList; i++) {
-        printf("num %i \n mas%i\n len %i\n", list[i].num,
+        printf("num %i \n mas %i\n len %i\n", list[i].num,
                _msize(list[i].list), list[i].lenList);
     }
 }
 
+void writeInFile(char *fileName, struct Graph *list) {
+    FILE *openFile = fopen(fileName, "w");
+    if (openFile == NULL) printf("File not open \n");
 
+    if (list == NULL) printf("List empty \n");
+    int lenList = _msize(list) / sizeof(struct Graph);
+
+    const char strNum[] = "Graph num=";
+    const char enter[] = " \n";
+    const char masStr[] = "Mas ribs=";
+    const char comma[] = ", ";
+
+    char *out = malloc(sizeof(char));
+    int lenOut = 0;
+    for (int i = 0; i < lenList; i++) {
+        // out = malloc(sizeof(char)*(2+ sizeof(strNum)+ sizeof(enter)));
+        fputs(strNum, openFile);
+        fputc(list[i].num + '0', openFile);
+        fputs(enter, openFile);
+
+        fputs(masStr, openFile);
+        for (int j = 0; j < list[i].lenList; ++j) {
+            if (j == list[i].lenList - 1) {  //if last sym
+                fputc(list[i].list[j].num + '0', openFile);
+                continue;
+            }
+            fputc(list[i].list[j].num + '0', openFile);
+            fputs(comma, openFile);
+        }
+        fputs(enter, openFile);
+
+        fputs(enter, openFile);
+    }
+
+
+    free(out);
+    fclose(openFile);
+}
 
 struct Graph *loadFile(char *fileName) {
     FILE *openFile = fopen(fileName, "r");
@@ -154,12 +189,14 @@ struct Graph *loadFile(char *fileName) {
             rib.list = masIntToRibList(ribs);
             rib.lenList = _msize(rib.list) / sizeof(struct Graph);
             result = addGraphInMas(rib, result);
+
             free(subSpl);
             free(ribs);
         }
         //printf("test debug\n");
     }
 
+    free(file);
     free(splitResultSlash);
     free(splitResultStr);
 

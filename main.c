@@ -10,8 +10,8 @@ int main() {
     a=addGraphInMas(b,a);
     char i = indexInMas(0, a);
     struct Graph *test=loadFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\fileDATA.txt");
-    printList(test);
-
+//    printList(test);
+    writeInFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\file.txt",test);
     printf("END!\n");
     return 0;
 }
