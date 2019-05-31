@@ -101,10 +101,7 @@ void writeInFile(char *fileName, struct Graph *list) {
     const char masStr[] = "Mas ribs=";
     const char comma[] = ", ";
 
-    char *out = malloc(sizeof(char));
-    int lenOut = 0;
     for (int i = 0; i < lenList; i++) {
-        // out = malloc(sizeof(char)*(2+ sizeof(strNum)+ sizeof(enter)));
         fputs(strNum, openFile);
         fputc(list[i].num + '0', openFile);
         fputs(enter, openFile);
@@ -123,8 +120,6 @@ void writeInFile(char *fileName, struct Graph *list) {
         fputs(enter, openFile);
     }
 
-
-    free(out);
     fclose(openFile);
 }
 
@@ -147,8 +142,12 @@ struct Graph *loadFile(char *fileName) {
 
     //parse string
     int *splitResultSlash = splitInOneStr('-', file, lenChar); //#
+    if (splitResultSlash == NULL)
+        return NULL;
     int lenSplitResultSlash = _msize(splitResultSlash) / sizeof(int);
     int *splitResultStr = split('\n', file, lenChar); //#
+    if (splitResultStr == NULL)
+        return NULL;
 
 
     for (int i = 0; i < lenSplitResultSlash; i++) {
@@ -158,6 +157,8 @@ struct Graph *loadFile(char *fileName) {
             rib = newRibNum(c - '0');
             int *subSpl = subSplit(' ', file, splitResultSlash[i], splitResultStr[i]); //#All space in str
             int *ribs = calloc(1, sizeof(int)); //#rib in mas and repair to link
+            if (ribs == NULL)
+                return NULL;
             ribs[0] = file[splitResultSlash[i] + 1] - '0'; //num in right to slash
             int lenribs = 1;
             if (subSpl != NULL) {
@@ -168,6 +169,8 @@ struct Graph *loadFile(char *fileName) {
                     if (j == lenSpl - 1) last = splitResultStr[i];
                     else last = subSpl[j + 1];
                     char *num = malloc(sizeof(char)); //#
+                    if (num == NULL)
+                        return NULL;
                     int lenNum = 0;
 
                     for (int g = subSpl[j] + 1; g < last; g++) {
@@ -175,12 +178,16 @@ struct Graph *loadFile(char *fileName) {
                         if (letter >= '0' && letter <= '9') {
                             lenNum++;
                             num = realloc(num, sizeof(char) * lenNum);
+                            if (num == NULL)
+                                return NULL;
                             num[lenNum - 1] = letter;
                         }
                     }
                     int prRib = atoi(num); //rib for mas in int
                     lenribs++;
                     ribs = realloc(ribs, sizeof(int) * lenribs);
+                    if (ribs == NULL)
+                        return NULL;
                     ribs[lenribs - 1] = prRib;
                     free(num);
                 }
@@ -229,8 +236,14 @@ int *splitInOneStr(char c, char *mas, int lenMas) {
             oneStr = 0;
             if (lenResult == 1) {
                 result = malloc(sizeof(int) * lenResult);
-            } else
+                if (result == NULL)
+                    return NULL;
+            } else {
                 result = realloc(result, sizeof(int) * (lenResult));
+                if (result == NULL)
+                    return NULL;
+            }
+
 
             result[lenResult - 1] = i;
         }
@@ -248,8 +261,13 @@ int *split(char c, char *mas, int lenMas) {
             lenResult++;
             if (lenResult == 1) {
                 result = malloc(sizeof(int) * lenResult);
-            } else
+                if (result == NULL)
+                    return NULL;
+            } else {
                 result = realloc(result, sizeof(int) * (lenResult));
+                if (result == NULL)
+                    return NULL;
+            }
 
             result[lenResult - 1] = i;
         }
@@ -265,8 +283,13 @@ int *subSplit(char c, char *mas, int start, int end) {
             lenResult++;
             if (lenResult == 1) {
                 result = malloc(sizeof(int) * lenResult);
-            } else
+                if (result == NULL)
+                    return NULL;
+            } else {
                 result = realloc(result, sizeof(int) * (lenResult));
+                if (result == NULL)
+                    return NULL;
+            }
 
             result[lenResult - 1] = i;
         }
