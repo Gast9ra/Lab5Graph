@@ -81,11 +81,40 @@ void delList(struct Graph *list) {
 }
 
 
-void printList(struct Graph *list) {
+void printListDebug(struct Graph *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     for (int i = 0; i < lenList; i++) {
         printf("num %i \n mas %i\n len %i\n", list[i].num,
                _msize(list[i].list), list[i].lenList);
+    }
+}
+
+void printList(struct Graph *list){
+    if (list == NULL) printf("List empty \n");
+    int lenList = _msize(list) / sizeof(struct Graph);
+
+    const char strNum[] = "Graph num=";
+    const char enter[] = " \n";
+    const char masStr[] = "Mas ribs=";
+    const char comma[] = ", ";
+
+    for (int i = 0; i < lenList; i++) {
+        printf(strNum);
+        printf("%i",list[i].num);
+        printf(enter);
+
+        printf(masStr);
+        for (int j = 0; j < list[i].lenList; ++j) {
+            if (j == list[i].lenList - 1) {  //if last sym
+                printf("%i",list[i].list[j].num);
+                continue;
+            }
+            printf("%i",list[i].list[j].num);
+            printf(comma);
+        }
+        printf(enter);
+
+        printf(enter);
     }
 }
 
