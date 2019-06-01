@@ -6,35 +6,37 @@
 #define LAB5GRAPH_GRAPH_H
 
 
-struct Graph {
+struct Rib {
     int num; //name rib
-    struct Graph *list; //list for ribs
+    struct Rib *list; //list for ribs
     int lenList;
 };
 
 
 //create new list for ribs
-struct Graph *newListGraphs(void);
+struct Rib *newListGraphs(void);
 
 //new rib with num 0
-struct Graph newRib(void);
+struct Rib newRib(void);
 
-struct Graph newRibNum(int num);
+struct Rib newRibNum(int num);
 
-struct Graph *addGraphInMas(struct Graph rib, struct Graph *list);
+struct Rib *addGraphInMas(struct Rib rib, struct Rib *list);
 
-char indexInMas(int n, struct Graph *list);
+char indexInMas(int n, struct Rib *list);
 
-void delList(struct Graph *list);
+void delList(struct Rib *list);
 
-void printListDebug(struct Graph *list);
+void printListDebug(struct Rib *list);
 
-struct Graph *loadFile(char *fileName);
+struct Rib *loadFile(char *fileName);
 
-struct Graph *insertInList(struct Graph *list, struct Graph rib, int index);
+struct Rib *insertInList(struct Rib *list, struct Rib rib, int index);
 
-void writeInFile(char *fileName, struct Graph *list);
+void writeInFile(char *fileName, struct Rib *list);
 
-void printList(struct Graph *list);
+void printList(struct Rib *list);
+
+struct Rib *delRibInGraph(struct Rib rb, struct Rib *list);
 
 #endif //LAB5GRAPH_GRAPH_H

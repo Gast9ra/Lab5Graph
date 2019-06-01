@@ -13,32 +13,32 @@ int *subSplit(char c, char *mas, int start, int end);
 
 int *splitInOneStr(char c, char *mas, int lenMas);
 
-struct Graph *masIntToRibList(int *data);
+struct Rib *masIntToRibList(int *data);
 
-struct Graph *newListGraphs(void) {
-    struct Graph *_graph = (struct Graph *) malloc(sizeof(struct Graph));
+struct Rib *newListGraphs(void) {
+    struct Rib *_graph = (struct Rib *) malloc(sizeof(struct Rib));
     if (_graph == NULL) return 0;              //if out memory
     _graph[0] = newRib();
     return _graph;
 }
 
-struct Graph newRib(void) {
-    struct Graph result;
+struct Rib newRib(void) {
+    struct Rib result;
     result.num = 0;
     result.list = NULL;
     result.lenList = 0;
     return result;
 }
 
-struct Graph newRibNum(int num) {
-    struct Graph result;
+struct Rib newRibNum(int num) {
+    struct Rib result;
     result.num = num;
     result.list = NULL;
     result.lenList = 0;
     return result;
 }
 
-struct Graph *insertInList(struct Graph *list, struct Graph rib, int index) {
+struct Rib *insertInList(struct Rib *list, struct Rib rib, int index) {
     if (list == NULL) {
         list = newListGraphs();
         list = insertInList(list, rib, index);
@@ -48,7 +48,7 @@ struct Graph *insertInList(struct Graph *list, struct Graph rib, int index) {
     return list;
 }
 
-struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
+struct Rib *addGraphInMas(struct Rib rib, struct Rib *list) {
     if (list == NULL) {
         list = newListGraphs();
         list = insertInList(list, rib, 0);
@@ -56,11 +56,11 @@ struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
     }
     int lenList = _msize(list) / sizeof(list[0]);
     if (indexInMas(rib.num, list) == 0) {
-        struct Graph *newList = (struct Graph *) malloc((lenList + 1) * sizeof(struct Graph));
+        struct Rib *newList = (struct Rib *) malloc((lenList + 1) * sizeof(struct Rib));
         if (newList == NULL)
             return list;
 
-        memcpy(newList, list, (lenList) * sizeof(struct Graph));
+        memcpy(newList, list, (lenList) * sizeof(struct Rib));
         newList[lenList] = rib;
         free(list);
         return newList;
@@ -68,7 +68,7 @@ struct Graph *addGraphInMas(struct Graph rib, struct Graph *list) {
     return list;
 }
 
-char indexInMas(int n, struct Graph *list) {
+char indexInMas(int n, struct Rib *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     for (int i = 0; i < lenList; i++) {
         if (list[i].num == n) return 1;
@@ -76,12 +76,12 @@ char indexInMas(int n, struct Graph *list) {
     return 0;
 }
 
-void delList(struct Graph *list) {
+void delList(struct Rib *list) {
     free(list);
 }
 
 
-void printListDebug(struct Graph *list) {
+void printListDebug(struct Rib *list) {
     int lenList = _msize(list) / sizeof(list[0]);
     for (int i = 0; i < lenList; i++) {
         printf("num %i \n mas %i\n len %i\n", list[i].num,
@@ -89,9 +89,9 @@ void printListDebug(struct Graph *list) {
     }
 }
 
-void printList(struct Graph *list){
+void printList(struct Rib *list) {
     if (list == NULL) printf("List empty \n");
-    int lenList = _msize(list) / sizeof(struct Graph);
+    int lenList = _msize(list) / sizeof(struct Rib);
 
     const char strNum[] = "Graph num=";
     const char enter[] = " \n";
@@ -100,16 +100,16 @@ void printList(struct Graph *list){
 
     for (int i = 0; i < lenList; i++) {
         printf(strNum);
-        printf("%i",list[i].num);
+        printf("%i", list[i].num);
         printf(enter);
 
         printf(masStr);
         for (int j = 0; j < list[i].lenList; ++j) {
             if (j == list[i].lenList - 1) {  //if last sym
-                printf("%i",list[i].list[j].num);
+                printf("%i", list[i].list[j].num);
                 continue;
             }
-            printf("%i",list[i].list[j].num);
+            printf("%i", list[i].list[j].num);
             printf(comma);
         }
         printf(enter);
@@ -118,12 +118,12 @@ void printList(struct Graph *list){
     }
 }
 
-void writeInFile(char *fileName, struct Graph *list) {
+void writeInFile(char *fileName, struct Rib *list) {
     FILE *openFile = fopen(fileName, "w");
     if (openFile == NULL) printf("File not open \n");
 
     if (list == NULL) printf("List empty \n");
-    int lenList = _msize(list) / sizeof(struct Graph);
+    int lenList = _msize(list) / sizeof(struct Rib);
 
     const char strNum[] = "Graph num=";
     const char enter[] = " \n";
@@ -152,15 +152,15 @@ void writeInFile(char *fileName, struct Graph *list) {
     fclose(openFile);
 }
 
-struct Graph *loadFile(char *fileName) {
+struct Rib *loadFile(char *fileName) {
     FILE *openFile = fopen(fileName, "r");
     if (openFile == NULL) {
         printf("File not open \n");
         return NULL;
     }
-    struct Graph *result = NULL;
+    struct Rib *result = NULL;
     int lenChar = 0;
-    char *file=malloc(sizeof(char));
+    char *file = malloc(sizeof(char));
     char c;
     while ((c = fgetc(openFile)) != EOF) {
         lenChar++;
@@ -182,7 +182,7 @@ struct Graph *loadFile(char *fileName) {
     for (int i = 0; i < lenSplitResultSlash; i++) {
         c = file[splitResultSlash[i] - 1];
         if (c >= '0' && c <= '9') {
-            struct Graph rib;
+            struct Rib rib;
             rib = newRibNum(c - '0');
             int *subSpl = subSplit(' ', file, splitResultSlash[i], splitResultStr[i]); //#All space in str
             int *ribs = calloc(1, sizeof(int)); //#rib in mas and repair to link
@@ -223,7 +223,7 @@ struct Graph *loadFile(char *fileName) {
             }
 
             rib.list = masIntToRibList(ribs);
-            rib.lenList = _msize(rib.list) / sizeof(struct Graph);
+            rib.lenList = _msize(rib.list) / sizeof(struct Rib);
             result = addGraphInMas(rib, result);
 
             free(subSpl);
@@ -237,7 +237,7 @@ struct Graph *loadFile(char *fileName) {
     free(splitResultStr);
 
     //link ribs
-    int lenResult = _msize(result) / sizeof(struct Graph);
+    int lenResult = _msize(result) / sizeof(struct Rib);
     for (int i = 0; i < lenResult; i++) {
         int num = result[i].num;
 
@@ -327,8 +327,8 @@ int *subSplit(char c, char *mas, int start, int end) {
 
 }
 
-struct Graph *masIntToRibList(int *data) {
-    struct Graph *result = newListGraphs();
+struct Rib *masIntToRibList(int *data) {
+    struct Rib *result = newListGraphs();
     int len = _msize(data) / sizeof(int);
     result[0].num = data[0];
     for (int i = 1; i < len; i++) {
@@ -336,3 +336,30 @@ struct Graph *masIntToRibList(int *data) {
     }
     return result;
 }
+
+struct Rib *delRibInGraph(struct Rib rb, struct Rib *list) {
+    if (list == NULL) return list;
+    int lenmas = _msize(list) / sizeof(struct Rib);
+    int num = rb.num;
+
+    for (int i = 0; i < lenmas; i++) {
+        if (list[i].num == num) {
+            free(list[i].list);
+            struct Rib *newlist = NULL;
+            for (int j = 0; j < lenmas; j++) {
+                if (list[j].num != num)
+                    newlist=addGraphInMas(list[j], newlist);
+            }
+            list = newlist;
+            break;
+        }
+    }
+    lenmas = _msize(list) / sizeof(struct Rib);
+    for (int i = 0; i < lenmas; i++) {
+        list[i].list = delRibInGraph(rb, list[i].list);
+        list[i].lenList = _msize(list[i].list) / sizeof(struct Rib);
+    }
+
+    return list;
+}
+
