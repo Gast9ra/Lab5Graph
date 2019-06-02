@@ -27,8 +27,6 @@ char indexInMas(int n, struct Rib *list);
 
 void delList(struct Rib *list);
 
-void printListDebug(struct Rib *list);
-
 struct Rib *loadFile(char *fileName);
 
 struct Rib *insertInList(struct Rib *list, struct Rib rib, int index);
