@@ -34,6 +34,7 @@ void testAdd(){
 
 int main() {
     testDel();
+    testAdd();
     printf("Test done");
     return 0;
 }

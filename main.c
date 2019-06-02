@@ -5,10 +5,6 @@
 int main(int argc, char *argv[]) {
     switch (argc) {
 
-        case 1:
-            printf("Not arguments");
-            break;
-
         case 2:
             printList(loadFile(argv[1]));
             break;
@@ -17,6 +13,9 @@ int main(int argc, char *argv[]) {
             writeInFile(argv[2],loadFile(argv[1]));
             break;
 
+        default:
+            printf("Not arguments");
+            break;
     }
 
   //  struct Graph *test=loadFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\fileDATA.txt");
