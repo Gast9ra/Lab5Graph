@@ -90,7 +90,7 @@ void printListDebug(struct Rib *list) {
 }
 
 void printList(struct Rib *list) {
-    if (list == NULL) printf("List empty \n");
+    if (list == NULL) printf("Mas empty \n");
     int lenList = _msize(list) / sizeof(struct Rib);
 
     const char strNum[] = "Graph num=";
@@ -122,7 +122,7 @@ void writeInFile(char *fileName, struct Rib *list) {
     FILE *openFile = fopen(fileName, "w");
     if (openFile == NULL) printf("File not open \n");
 
-    if (list == NULL) printf("List empty \n");
+    if (list == NULL) printf("Mas empty \n");
     int lenList = _msize(list) / sizeof(struct Rib);
 
     const char strNum[] = "Graph num=";

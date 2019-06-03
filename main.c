@@ -18,9 +18,6 @@ int main(int argc, char *argv[]) {
             break;
     }
 
-  //  struct Graph *test=loadFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\fileDATA.txt");
-    //writeInFile("C:\\Users\\Gast9ra\\CLionProjects\\Lab5Graph\\lab5\\file.txt",test);
-//    printList(test);
 
     return 0;
 }

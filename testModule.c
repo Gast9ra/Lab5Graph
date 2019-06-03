@@ -5,7 +5,6 @@
 #include <assert.h>
 #include <malloc.h>
 #include "graph.h"
-//assert
 
 void testDel(){
     int result=1;
